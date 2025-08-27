@@ -14,3 +14,13 @@ def get_puuid(game_name: str, tag_line: str) -> str:
     return resp.json()["puuid"]
 
 get_puuid('brownbuddyguy', '3619')
+
+def get_match_ids(puuid: str, count: int = 100) -> list[str]:
+    url = f"{BASE_URL}/lol/match/v5/matches/by-puuid/{puuid}/ids"
+    headers = {"X-Riot-Token": API_KEY}
+    params = {"count": count}
+    resp = requests.get(url, headers=headers, params=params)
+    resp.raise_for_status()
+    return(resp.json())
+
+get_match_ids(get_puuid('brownbuddyguy', '3619'))
